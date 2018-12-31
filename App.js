@@ -1,10 +1,22 @@
-import React                                                       from 'react';
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React                                                                 from 'react';
+import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default class App extends React.Component {
   render() {
+    const data = [
+      { str: 'hoge', key: '1' },
+      { str: 'fuga', key: '2' },
+      { str: 'foo', key: '3' },
+    ];
     return (
       <View style={styles.container}>
+        <FlatList
+          style={ styles.list }
+          data={ data }
+          renderItem={ ({ item }) => {
+            return <Text key={ item.key }>1{ item.str }</Text>;
+          } }
+        />
         <TouchableOpacity onPress={ () => console.warn('pressed!') }>
           <Image style={ styles.image } source={ require('./assets/sample.png') }/>
         </TouchableOpacity>
@@ -25,5 +37,8 @@ const styles = StyleSheet.create({
   image    : {
     width : 64,
     height: 64
+  },
+  list     : {
+    paddingTop: 50
   }
 });
