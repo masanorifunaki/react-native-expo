@@ -1,36 +1,21 @@
-import React                           from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import React                   from 'react';
+import { StyleSheet, WebView } from 'react-native';
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      text: '',
-    };
-  }
+  // コンポーネントを表示するためにも、scalesPageToFit={true} が必要
   render() {
     return (
-      <View style={ styles.container }>
-        <TextInput
-          style={ styles.text_input }
-          onChangeText={ (text) => this.setState({ text }) }
-          value={ this.state.text }
-        />
-      </View>
+      <WebView
+        source={ { uri: 'https://www.google.com/' } }
+        style={ styles.container }
+        scalesPageToFit={ true }
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
   container : {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 20
   },
-  text_input: {
-    width            : '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
-  }
 });
