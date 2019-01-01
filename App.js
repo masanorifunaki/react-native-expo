@@ -1,47 +1,51 @@
-import React                               from 'react';
-import { Button, Share, StyleSheet, View } from 'react-native';
+import React                                                    from 'react';
+import { Button, Clipboard, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      position: {},
+      input: '',
+      text : '',
     };
   }
 
-  openShare() {
-    Share.share({
-      title  : 'Title',
-      message: 'Message'
-    }, {}).then((result, activityType) => {
-      if ( result.action === Share.dismissedAction ) {
-        // シェアを中断した場合(iOS)
-      } else if ( result.action === Share.sharedAction ) {
-        // シェアを実行した場合(iOS,Android)
-      } else {
+  pbcopy() {
+    const { input } = this.state;
+    Clipboard.setString(input);
+  }
 
-      }
-    });
+  async getpb() {
+    const text = await Clipboard.getString();
+    this.setState({ text });
   }
   render() {
-    const { position } = this.state;
-
     return (
       <View style={ styles.container }>
-        <Button onPress={ () => this.openShare() } title={ 'Open' }/>
+        <TextInput
+          style={ styles.text_input }
+          value={ this.state.input }
+          onChangeText={ input => this.setState({ input }) }
+        />
+        <Button onPress={ () => {this.pbcopy();} } title='Save'/>
+        <Text>{ this.state.text }</Text>
+        <Button onPress={ () => {this.getpb();} } title='Get'/>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container  : {
+  container : {
     flex           : 1,
     justifyContent : 'center',
     alignItems     : 'center',
     backgroundColor: '#F5FCFF',
   },
-  data_picker: {
-    width: 320
+  text_input: {
+    width            : '100%',
+    textAlign        : 'center',
+    borderBottomWidth: 1,
+    borderColor      : '#ccc'
   }
 });
