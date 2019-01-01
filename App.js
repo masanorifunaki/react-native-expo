@@ -1,22 +1,34 @@
 import React                               from 'react';
-import { DatePickerIOS, StyleSheet, View } from 'react-native';
+import { Button, Share, StyleSheet, View } from 'react-native';
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      date: new Date(),
+      position: {},
     };
   }
+
+  openShare() {
+    Share.share({
+      title  : 'Title',
+      message: 'Message'
+    }, {}).then((result, activityType) => {
+      if ( result.action === Share.dismissedAction ) {
+        // シェアを中断した場合(iOS)
+      } else if ( result.action === Share.sharedAction ) {
+        // シェアを実行した場合(iOS,Android)
+      } else {
+
+      }
+    });
+  }
   render() {
+    const { position } = this.state;
+
     return (
       <View style={ styles.container }>
-        <DatePickerIOS
-          style={ styles.data_picker }
-          date={ this.state.date }
-          onDateChange={ date => this.setState({ date }) }
-          mode={ 'date' }
-        />
+        <Button onPress={ () => this.openShare() } title={ 'Open' }/>
       </View>
     );
   }
