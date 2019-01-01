@@ -1,47 +1,24 @@
-import React                               from 'react';
-import { Button, Share, StyleSheet, View } from 'react-native';
+import React                                  from 'react';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      position: {},
-    };
-  }
-
-  openShare() {
-    Share.share({
-      title  : 'Title',
-      message: 'Message'
-    }, {}).then((result, activityType) => {
-      if ( result.action === Share.dismissedAction ) {
-        // シェアを中断した場合(iOS)
-      } else if ( result.action === Share.sharedAction ) {
-        // シェアを実行した場合(iOS,Android)
-      } else {
-
-      }
-    });
-  }
   render() {
-    const { position } = this.state;
-
+    const { width, height, scale } = Dimensions.get('window');
     return (
       <View style={ styles.container }>
-        <Button onPress={ () => this.openShare() } title={ 'Open' }/>
+        <Text>{ width }</Text>
+        <Text>{ height }</Text>
+        <Text>{ scale }</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container  : {
+  container : {
     flex           : 1,
     justifyContent : 'center',
     alignItems     : 'center',
     backgroundColor: '#F5FCFF',
   },
-  data_picker: {
-    width: 320
-  }
 });
