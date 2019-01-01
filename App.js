@@ -1,35 +1,14 @@
-import React                                                    from 'react';
-import { Button, Clipboard, StyleSheet, Text, TextInput, View } from 'react-native';
+import React                                  from 'react';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      input: '',
-      text : '',
-    };
-  }
-
-  pbcopy() {
-    const { input } = this.state;
-    Clipboard.setString(input);
-  }
-
-  async getpb() {
-    const text = await Clipboard.getString();
-    this.setState({ text });
-  }
   render() {
+    const { width, height, scale } = Dimensions.get('window');
     return (
       <View style={ styles.container }>
-        <TextInput
-          style={ styles.text_input }
-          value={ this.state.input }
-          onChangeText={ input => this.setState({ input }) }
-        />
-        <Button onPress={ () => {this.pbcopy();} } title='Save'/>
-        <Text>{ this.state.text }</Text>
-        <Button onPress={ () => {this.getpb();} } title='Get'/>
+        <Text>{ width }</Text>
+        <Text>{ height }</Text>
+        <Text>{ scale }</Text>
       </View>
     );
   }
@@ -42,10 +21,4 @@ const styles = StyleSheet.create({
     alignItems     : 'center',
     backgroundColor: '#F5FCFF',
   },
-  text_input: {
-    width            : '100%',
-    textAlign        : 'center',
-    borderBottomWidth: 1,
-    borderColor      : '#ccc'
-  }
 });
